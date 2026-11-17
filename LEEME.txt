@@ -1,0 +1,15 @@
+SEGUNDO PARCIAL POO - E2_Taller_Errores_Alumnos
+Arquitectura: exactamente la del CRUD MVC utilizado en clase.
+- NetBeans Ant (nbproject/), paquete crud_mvc, modelo, vista, controlador.
+- Swing JFrame Form: VistaReparacion.java + VistaReparacion.form + VistaLogin.java/.form.
+- ActionListener + actionPerformed(), sin lambdas.
+- Conexion.getConnection(), JDBC con PreparedStatement, ResultSet, try/catch/finally.
+- Base: taller_bicicletas_parcial. Script: sql/inicial.sql (MySQL Workbench).
+- Credenciales MySQL en modelo/Conexion.java: root/root (ajustar a cada equipo).
+- Proyecto abierto en NetBeans mediante Archivo > Abrir proyecto. No ejecutar desde ZIP.
+- Usar JDK 11 o superior; se compila con javac --release 11.
+Ejercicio 2: usuarios de laboratorio admin/admin123 y comun/comun123.
+Buscar usa código de reparación (REP-01); el listado muestra todas las reparaciones.
+La versión ALUMNOS contiene A: NullPointerException al iniciar, B: error SQL al listar,
+C: NumberFormatException con costo inválido, D: permiso de eliminar incorrecto.
+Las versiones DOCENTE contienen las correcciones.
