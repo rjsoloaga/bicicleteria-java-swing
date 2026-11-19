@@ -15,10 +15,17 @@ public class VistaMenuPrincipal extends JFrame {
     public JTabbedPane pestanas;
     public JButton botonCerrarSesion;
 
-    public VistaMenuPrincipal(Usuario usuarioLogueado, PanelUsuarios panelUsuarios) {
+    public VistaMenuPrincipal(
+            Usuario usuarioLogueado,
+            PanelProductos panelProductos,
+            PanelReportes panelReportes,
+            PanelCategorias panelCategorias,
+            PanelTipos panelTipos,
+            PanelUsuarios panelUsuarios) {
+
         setTitle("Bicicletería - Sesión: " + usuarioLogueado.getNombreUsuario() + " [" + usuarioLogueado.getRol().getNombre() + "]");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(980, 620);
+        setSize(1080, 680);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
@@ -41,25 +48,17 @@ public class VistaMenuPrincipal extends JFrame {
         // Pestañas de módulos
         pestanas = new JTabbedPane();
 
-        // Módulos visibles para todos los roles (Juan Pablo los reemplazará por sus paneles reales)
-        pestanas.addTab("Catálogo de Productos", crearPlaceholder("Módulo Productos (Juan Pablo Katona)"));
-        pestanas.addTab("Reportes e Inventario", crearPlaceholder("Módulo Reportes (Juan Pablo Katona)"));
+        // Módulos visibles para todos los roles (ADMINISTRADOR y VENDEDOR)
+        pestanas.addTab("Catálogo de Productos", panelProductos);
+        pestanas.addTab("Reportes e Inventario", panelReportes);
 
         // Módulos exclusivos de ADMINISTRADOR
         if (usuarioLogueado.esAdministrador()) {
-            pestanas.addTab("Categorías", crearPlaceholder("Módulo Categorías (Macarena Rico)"));
-            pestanas.addTab("Tipos de Producto", crearPlaceholder("Módulo Tipos (Macarena Rico)"));
+            pestanas.addTab("Categorías", panelCategorias);
+            pestanas.addTab("Tipos de Producto", panelTipos);
             pestanas.addTab("Gestión de Usuarios", panelUsuarios);
         }
 
         add(pestanas, BorderLayout.CENTER);
-    }
-
-    private JPanel crearPlaceholder(String texto) {
-        JPanel panel = new JPanel(new BorderLayout());
-        JLabel label = new JLabel(texto, JLabel.CENTER);
-        label.setFont(new Font("SansSerif", Font.PLAIN, 15));
-        panel.add(label, BorderLayout.CENTER);
-        return panel;
     }
 }

@@ -4,8 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
+import modelo.ConsultasCategoria;
+import modelo.ConsultasProducto;
+import modelo.ConsultasTipo;
 import modelo.ConsultasUsuario;
 import modelo.Usuario;
+import vista.PanelCategorias;
+import vista.PanelProductos;
+import vista.PanelReportes;
+import vista.PanelTipos;
 import vista.PanelUsuarios;
 import vista.VistaLogin;
 import vista.VistaMenuPrincipal;
@@ -48,13 +55,57 @@ public class ControladorLogin implements ActionListener {
                 return;
             }
 
+            // 1. Módulos visibles para todos los roles (Productos y Reportes)
+            ConsultasProducto consultasProducto = new ConsultasProducto();
+            PanelProductos panelProductos = new PanelProductos();
+            ControladorProducto ctrlProducto = new ControladorProducto(panelProductos, consultasProducto, usuario);
+            ctrlProducto.iniciar();
+
+            PanelReportes panelReportes = new PanelReportes();
+            ControladorReporte ctrlReporte = new ControladorReporte(panelReportes, consultasProducto);
+            ctrlReporte.iniciar();
+
+            // 2. Módulos exclusivos de ADMINISTRADOR (Tipos, Categorías y Usuarios)
+            PanelTipos panelTipos = new PanelTipos();
+            PanelCategorias panelCategorias = new PanelCategorias();
             PanelUsuarios panelUsuarios = new PanelUsuarios();
+
             if (usuario.esAdministrador()) {
+                ConsultasTipo consultasTipo = new ConsultasTipo();
+                ControladorTipo ctrlTipo = new ControladorTipo(panelTipos, consultasTipo);
+                ctrlTipo.iniciar();
+
+                ConsultasCategoria consultasCategoria = new ConsultasCategoria();
+                ControladorCategoria ctrlCategoria = new ControladorCategoria(panelCategorias, consultasCategoria, consultasTipo);
+                ctrlCategoria.iniciar();
+
                 ControladorUsuario ctrlUsuario = new ControladorUsuario(panelUsuarios, modelo, usuario);
                 ctrlUsuario.iniciar();
             }
 
-            VistaMenuPrincipal menu = new VistaMenuPrincipal(usuario, panelUsuarios);
+            // 3. Armar ventana principal e integrar pestañas
+            VistaMenuPrincipal menu = new VistaMenuPrincipal(
+                    usuario,
+                    panelProductos,
+                    panelReportes,
+                    panelCategorias,
+                    panelTipos,
+                    panelUsuarios
+            );
+
+            // Actualizar datos dinámicamente al cambiar de pestaña
+            menu.pestanas.addChangeListener(e -> {
+                java.awt.Component seleccionada = menu.pestanas.getSelectedComponent();
+                if (seleccionada == panelProductos) {
+                    if (usuario.esAdministrador()) {
+                        ctrlProducto.cargarCategorias();
+                    }
+                    ctrlProducto.listarProductos();
+                } else if (seleccionada == panelReportes) {
+                    ctrlReporte.cargarReporte();
+                }
+            });
+
             menu.botonCerrarSesion.addActionListener(e -> {
                 menu.dispose();
                 VistaLogin nuevoLogin = new VistaLogin();
