@@ -1,140 +1,247 @@
 package vista;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import modelo.Producto.OpcionCategoria;
 
-public class PanelProductos extends JPanel {
-    public JPanel panelBusqueda;
-    public JTextField cajaBuscar;
-    public JButton botonBuscar;
-    public JButton botonLimpiarFiltro;
+public class PanelProductos extends javax.swing.JPanel {
 
-    public JPanel panelFormulario;
-    public JPanel panelBotones;
-
-    public JTextField cajaIdProducto;
-    public JTextField cajaCodigo;
-    public JTextField cajaNombre;
-    public JTextField cajaPrecio;
-    public JTextField cajaStock;
-    public JComboBox<OpcionCategoria> comboCategoria;
-
-    public JButton botonInsertar;
-    public JButton botonModificar;
-    public JButton botonCambiarEstado;
-    public JButton botonLimpiar;
-
-    public JTable tablaProductos;
     public DefaultTableModel modeloTabla;
 
     public PanelProductos() {
-        setLayout(new BorderLayout(10, 10));
-        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        this(true);
+    }
 
-        cajaIdProducto = new JTextField();
-        cajaIdProducto.setVisible(false);
-
-        // Barra superior de búsqueda
-        panelBusqueda = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        panelBusqueda.setBorder(BorderFactory.createTitledBorder("Búsqueda por Código, Nombre o Categoría"));
-        panelBusqueda.add(new JLabel("Filtrar:"));
-        cajaBuscar = new JTextField(25);
-        panelBusqueda.add(cajaBuscar);
-        botonBuscar = new JButton("Filtrar");
-        panelBusqueda.add(botonBuscar);
-        botonLimpiarFiltro = new JButton("Ver Todos");
-        panelBusqueda.add(botonLimpiarFiltro);
-
-        // Panel de formulario (ABM para ADMINISTRADOR)
-        panelFormulario = new JPanel(new GridBagLayout());
-        panelFormulario.setBorder(BorderFactory.createTitledBorder("Gestión de Producto"));
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(4, 6, 4, 6);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-
-        // Fila 0: Código y Nombre
-        gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0.1;
-        panelFormulario.add(new JLabel("Código:*"), gbc);
-        gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 0.4;
-        cajaCodigo = new JTextField();
-        panelFormulario.add(cajaCodigo, gbc);
-
-        gbc.gridx = 2; gbc.gridy = 0; gbc.weightx = 0.1;
-        panelFormulario.add(new JLabel("Nombre:*"), gbc);
-        gbc.gridx = 3; gbc.gridy = 0; gbc.weightx = 0.4;
-        cajaNombre = new JTextField();
-        panelFormulario.add(cajaNombre, gbc);
-
-        // Fila 1: Precio y Stock
-        gbc.gridx = 0; gbc.gridy = 1; gbc.weightx = 0.1;
-        panelFormulario.add(new JLabel("Precio ($):*"), gbc);
-        gbc.gridx = 1; gbc.gridy = 1; gbc.weightx = 0.4;
-        cajaPrecio = new JTextField();
-        panelFormulario.add(cajaPrecio, gbc);
-
-        gbc.gridx = 2; gbc.gridy = 1; gbc.weightx = 0.1;
-        panelFormulario.add(new JLabel("Stock:*"), gbc);
-        gbc.gridx = 3; gbc.gridy = 1; gbc.weightx = 0.4;
-        cajaStock = new JTextField();
-        panelFormulario.add(cajaStock, gbc);
-
-        // Fila 2: Categoría
-        gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 0.1;
-        panelFormulario.add(new JLabel("Categoría:*"), gbc);
-        gbc.gridx = 1; gbc.gridy = 2; gbc.weightx = 0.4;
-        comboCategoria = new JComboBox<>();
-        panelFormulario.add(comboCategoria, gbc);
-
-        // Fila 3: Botones de acción
-        panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
-        botonInsertar = new JButton("Guardar Nuevo");
-        botonModificar = new JButton("Modificar");
-        botonCambiarEstado = new JButton("Desactivar / Activar");
-        botonLimpiar = new JButton("Limpiar");
-
-        panelBotones.add(botonInsertar);
-        panelBotones.add(botonModificar);
-        panelBotones.add(botonCambiarEstado);
-        panelBotones.add(botonLimpiar);
-
-        gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 4;
-        panelFormulario.add(panelBotones, gbc);
-
-        // Contenedor norte que agrupa búsqueda y formulario
-        JPanel contenedorNorte = new JPanel(new BorderLayout(5, 5));
-        contenedorNorte.add(panelBusqueda, BorderLayout.NORTH);
-        contenedorNorte.add(panelFormulario, BorderLayout.CENTER);
-        add(contenedorNorte, BorderLayout.NORTH);
-
-        // Tabla inferior no editable
-        String[] columnas = {"ID", "ID_CAT", "Código", "Nombre", "Categoría", "Tipo", "Precio ($)", "Stock", "Estado"};
-        modeloTabla = new DefaultTableModel(columnas, 0) {
+    public PanelProductos(boolean esAdmin) {
+        initComponents();
+        modeloTabla = new DefaultTableModel(new Object[]{"ID", "Código", "Nombre", "Precio", "Stock", "Categoría", "Tipo", "Estado"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        tablaProductos = new JTable(modeloTabla);
-        tablaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        // Ocultar columna ID_CAT visualmente
-        tablaProductos.getColumnModel().getColumn(1).setMinWidth(0);
-        tablaProductos.getColumnModel().getColumn(1).setMaxWidth(0);
-        tablaProductos.getColumnModel().getColumn(1).setWidth(0);
+        tablaProductos.setModel(modeloTabla);
 
-        add(new JScrollPane(tablaProductos), BorderLayout.CENTER);
+        if (!esAdmin) {
+            panelFormulario.setVisible(false);
+            panelBotones.setVisible(false);
+            checkSoloActivos.setSelected(true);
+            checkSoloActivos.setVisible(false);
+        }
     }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        panelFormulario = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        cajaIdProducto = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        cajaCodigo = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        cajaNombre = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        cajaPrecio = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        cajaStock = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        comboCategoria = new javax.swing.JComboBox<>();
+        panelBotones = new javax.swing.JPanel();
+        botonInsertar = new javax.swing.JButton();
+        botonModificar = new javax.swing.JButton();
+        botonCambiarEstado = new javax.swing.JButton();
+        botonLimpiar = new javax.swing.JButton();
+        jLabelBuscar = new javax.swing.JLabel();
+        cajaBuscar = new javax.swing.JTextField();
+        botonBuscar = new javax.swing.JButton();
+        botonLimpiarFiltro = new javax.swing.JButton();
+        checkSoloActivos = new javax.swing.JCheckBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaProductos = new javax.swing.JTable();
+
+        panelFormulario.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del Producto"));
+
+        jLabel1.setText("ID:");
+
+        cajaIdProducto.setEditable(false);
+
+        jLabel2.setText("Código:");
+
+        jLabel3.setText("Nombre:");
+
+        jLabel4.setText("Precio ($):");
+
+        jLabel5.setText("Stock:");
+
+        jLabel6.setText("Categoría:");
+
+        botonInsertar.setText("Guardar");
+
+        botonModificar.setText("Modificar");
+
+        botonCambiarEstado.setText("Activar / Desactivar");
+
+        botonLimpiar.setText("Limpiar");
+
+        javax.swing.GroupLayout panelBotonesLayout = new javax.swing.GroupLayout(panelBotones);
+        panelBotones.setLayout(panelBotonesLayout);
+        panelBotonesLayout.setHorizontalGroup(
+            panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(botonInsertar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(botonModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(botonCambiarEstado, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+            .addComponent(botonLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        panelBotonesLayout.setVerticalGroup(
+            panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBotonesLayout.createSequentialGroup()
+                .addComponent(botonInsertar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonModificar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonCambiarEstado)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonLimpiar))
+        );
+
+        javax.swing.GroupLayout panelFormularioLayout = new javax.swing.GroupLayout(panelFormulario);
+        panelFormulario.setLayout(panelFormularioLayout);
+        panelFormularioLayout.setHorizontalGroup(
+            panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFormularioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cajaCodigo)
+                    .addComponent(cajaNombre)
+                    .addComponent(cajaPrecio)
+                    .addComponent(cajaStock)
+                    .addComponent(comboCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelBotones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelFormularioLayout.createSequentialGroup()
+                        .addGroup(panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(cajaIdProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        panelFormularioLayout.setVerticalGroup(
+            panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFormularioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cajaIdProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cajaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cajaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cajaPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cajaStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabelBuscar.setText("Buscar:");
+
+        botonBuscar.setText("Buscar");
+
+        botonLimpiarFiltro.setText("Todos");
+
+        checkSoloActivos.setSelected(true);
+        checkSoloActivos.setText("Solo activos");
+
+        tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] {"ID", "Código", "Nombre", "Precio", "Stock", "Categoría", "Tipo", "Estado"}
+        ));
+        jScrollPane1.setViewportView(tablaProductos);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelFormulario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelBuscar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cajaBuscar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botonBuscar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botonLimpiarFiltro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(checkSoloActivos))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelFormulario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelBuscar)
+                            .addComponent(cajaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botonBuscar)
+                            .addComponent(botonLimpiarFiltro)
+                            .addComponent(checkSoloActivos))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1)))
+                .addContainerGap())
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton botonBuscar;
+    public javax.swing.JButton botonCambiarEstado;
+    public javax.swing.JButton botonInsertar;
+    public javax.swing.JButton botonLimpiar;
+    public javax.swing.JButton botonLimpiarFiltro;
+    public javax.swing.JButton botonModificar;
+    public javax.swing.JTextField cajaBuscar;
+    public javax.swing.JTextField cajaCodigo;
+    public javax.swing.JTextField cajaIdProducto;
+    public javax.swing.JTextField cajaNombre;
+    public javax.swing.JTextField cajaPrecio;
+    public javax.swing.JTextField cajaStock;
+    public javax.swing.JCheckBox checkSoloActivos;
+    public javax.swing.JComboBox<OpcionCategoria> comboCategoria;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabelBuscar;
+    private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JPanel panelBotones;
+    public javax.swing.JPanel panelFormulario;
+    public javax.swing.JTable tablaProductos;
+    // End of variables declaration//GEN-END:variables
 }

@@ -1,63 +1,96 @@
 package vista;
 
-import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
-public class VistaLogin extends JFrame {
-    public JTextField cajaUsuario;
-    public JPasswordField cajaClave;
-    public JButton botonIngresar;
+public class VistaLogin extends javax.swing.JFrame {
 
     public VistaLogin() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(380, 240);
-        setResizable(false);
-        setLayout(new BorderLayout(10, 10));
-
-        JLabel titulo = new JLabel("Sistema Bicicletería - Acceso", SwingConstants.CENTER);
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 16));
-        titulo.setBorder(BorderFactory.createEmptyBorder(15, 10, 5, 10));
-        add(titulo, BorderLayout.NORTH);
-
-        JPanel panelCentro = new JPanel(new GridBagLayout());
-        panelCentro.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20));
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(6, 6, 6, 6);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-
-        gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0.3;
-        panelCentro.add(new JLabel("Usuario:"), gbc);
-
-        gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 0.7;
-        cajaUsuario = new JTextField(15);
-        panelCentro.add(cajaUsuario, gbc);
-
-        gbc.gridx = 0; gbc.gridy = 1; gbc.weightx = 0.3;
-        panelCentro.add(new JLabel("Contraseña:"), gbc);
-
-        gbc.gridx = 1; gbc.gridy = 1; gbc.weightx = 0.7;
-        cajaClave = new JPasswordField(15);
-        panelCentro.add(cajaClave, gbc);
-
-        add(panelCentro, BorderLayout.CENTER);
-
-        JPanel panelSur = new JPanel();
-        panelSur.setBorder(BorderFactory.createEmptyBorder(0, 10, 15, 10));
-        botonIngresar = new JButton("Ingresar");
-        panelSur.add(botonIngresar);
-        add(panelSur, BorderLayout.SOUTH);
-
-        getRootPane().setDefaultButton(botonIngresar);
+        initComponents();
+        setLocationRelativeTo(null);
     }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabelTitulo = new javax.swing.JLabel();
+        jLabelSubtitulo = new javax.swing.JLabel();
+        jLabelUsuario = new javax.swing.JLabel();
+        cajaUsuario = new javax.swing.JTextField();
+        jLabelClave = new javax.swing.JLabel();
+        cajaClave = new javax.swing.JPasswordField();
+        botonIngresar = new javax.swing.JButton();
+        botonSalir = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Ingreso - Sistema de Bicicletería");
+        setResizable(false);
+
+        jLabelTitulo.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTitulo.setText("SISTEMA DE BICICLETERÍA");
+
+        jLabelSubtitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelSubtitulo.setText("Control de Acceso y Roles");
+
+        jLabelUsuario.setText("Usuario:");
+
+        jLabelClave.setText("Contraseña:");
+
+        botonIngresar.setText("Ingresar");
+
+        botonSalir.setText("Salir");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                    .addComponent(jLabelSubtitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelUsuario)
+                    .addComponent(cajaUsuario)
+                    .addComponent(jLabelClave)
+                    .addComponent(cajaClave)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(botonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botonIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabelTitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelSubtitulo)
+                .addGap(25, 25, 25)
+                .addComponent(jLabelUsuario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cajaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelClave)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cajaClave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton botonIngresar;
+    public javax.swing.JButton botonSalir;
+    public javax.swing.JPasswordField cajaClave;
+    public javax.swing.JTextField cajaUsuario;
+    private javax.swing.JLabel jLabelClave;
+    private javax.swing.JLabel jLabelSubtitulo;
+    private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JLabel jLabelUsuario;
+    // End of variables declaration//GEN-END:variables
 }

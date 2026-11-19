@@ -1,64 +1,92 @@
 package vista;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import modelo.Usuario;
 
-public class VistaMenuPrincipal extends JFrame {
-    public JTabbedPane pestanas;
-    public JButton botonCerrarSesion;
+public class VistaMenuPrincipal extends javax.swing.JFrame {
 
-    public VistaMenuPrincipal(
-            Usuario usuarioLogueado,
-            PanelProductos panelProductos,
-            PanelReportes panelReportes,
-            PanelCategorias panelCategorias,
-            PanelTipos panelTipos,
-            PanelUsuarios panelUsuarios) {
-
-        setTitle("Bicicletería - Sesión: " + usuarioLogueado.getNombreUsuario() + " [" + usuarioLogueado.getRol().getNombre() + "]");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1080, 680);
+    public VistaMenuPrincipal() {
+        initComponents();
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
+    }
 
-        // Barra superior con datos de sesión y botón Salir
-        JPanel barraSuperior = new JPanel(new BorderLayout());
-        barraSuperior.setBorder(BorderFactory.createEmptyBorder(8, 12, 8, 12));
+    public VistaMenuPrincipal(Usuario usuario,
+                              PanelProductos panelProductos,
+                              PanelReportes panelReportes,
+                              PanelCategorias panelCategorias,
+                              PanelTipos panelTipos,
+                              PanelUsuarios panelUsuarios) {
+        initComponents();
+        setLocationRelativeTo(null);
 
-        JLabel lblBienvenida = new JLabel("Usuario: " + usuarioLogueado.getPersona().getNombre() + " "
-                + usuarioLogueado.getPersona().getApellido() + " (" + usuarioLogueado.getRol().getNombre() + ")");
-        lblBienvenida.setFont(new Font("SansSerif", Font.BOLD, 13));
-        barraSuperior.add(lblBienvenida, BorderLayout.WEST);
+        boolean esAdmin = usuario.esAdministrador();
+        etiquetaBienvenida.setText("Usuario: " + usuario.getPersona().getNombre() + " " + usuario.getPersona().getApellido() + " (" + usuario.getNombreUsuario() + ")");
+        etiquetaRol.setText("Rol: " + usuario.getRol().getNombre());
 
-        JPanel panelDerecha = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
-        botonCerrarSesion = new JButton("Cerrar Sesión");
-        panelDerecha.add(botonCerrarSesion);
-        barraSuperior.add(panelDerecha, BorderLayout.EAST);
-
-        add(barraSuperior, BorderLayout.NORTH);
-
-        // Pestañas de módulos
-        pestanas = new JTabbedPane();
-
-        // Módulos visibles para todos los roles (ADMINISTRADOR y VENDEDOR)
         pestanas.addTab("Catálogo de Productos", panelProductos);
         pestanas.addTab("Reportes e Inventario", panelReportes);
 
-        // Módulos exclusivos de ADMINISTRADOR
-        if (usuarioLogueado.esAdministrador()) {
-            pestanas.addTab("Categorías", panelCategorias);
+        if (esAdmin) {
             pestanas.addTab("Tipos de Producto", panelTipos);
+            pestanas.addTab("Categorías", panelCategorias);
             pestanas.addTab("Gestión de Usuarios", panelUsuarios);
         }
-
-        add(pestanas, BorderLayout.CENTER);
     }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        etiquetaBienvenida = new javax.swing.JLabel();
+        etiquetaRol = new javax.swing.JLabel();
+        botonCerrarSesion = new javax.swing.JButton();
+        pestanas = new javax.swing.JTabbedPane();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gestión de Bicicletería - Menú Principal");
+
+        etiquetaBienvenida.setFont(new java.awt.Font("SansSerif", 1, 13)); // NOI18N
+        etiquetaBienvenida.setText("Usuario: Administrador");
+
+        etiquetaRol.setText("Rol: ADMINISTRADOR");
+
+        botonCerrarSesion.setText("Cerrar Sesión");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pestanas, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(etiquetaBienvenida)
+                        .addGap(24, 24, 24)
+                        .addComponent(etiquetaRol)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botonCerrarSesion)))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(etiquetaBienvenida)
+                    .addComponent(etiquetaRol)
+                    .addComponent(botonCerrarSesion))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pestanas, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton botonCerrarSesion;
+    public javax.swing.JLabel etiquetaBienvenida;
+    public javax.swing.JLabel etiquetaRol;
+    public javax.swing.JTabbedPane pestanas;
+    // End of variables declaration//GEN-END:variables
 }

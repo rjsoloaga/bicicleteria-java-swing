@@ -1,108 +1,151 @@
 package vista;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-public class PanelReportes extends JPanel {
-    public JLabel lblTotalProductosActivos;
-    public JLabel lblStockTotalAcumulado;
-    public JLabel lblValorizacionTotal;
+public class PanelReportes extends javax.swing.JPanel {
 
-    public JTable tablaStockBajo;
+    public DefaultTableModel modeloEstadisticaTipo;
     public DefaultTableModel modeloStockBajo;
 
-    public JTable tablaEstadisticaTipo;
-    public DefaultTableModel modeloEstadisticaTipo;
-
-    public JButton botonActualizar;
-
     public PanelReportes() {
-        setLayout(new BorderLayout(10, 10));
-        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        // Panel superior: Tarjetas de indicadores y botón Actualizar Reporte
-        JPanel panelNorte = new JPanel(new BorderLayout(10, 10));
-
-        JPanel panelIndicadores = new JPanel(new GridLayout(1, 3, 15, 0));
-        lblTotalProductosActivos = new JLabel("0", SwingConstants.CENTER);
-        lblStockTotalAcumulado = new JLabel("0", SwingConstants.CENTER);
-        lblValorizacionTotal = new JLabel("$ 0.00", SwingConstants.CENTER);
-
-        panelIndicadores.add(crearTarjetaIndicador("Total Productos Activos", lblTotalProductosActivos));
-        panelIndicadores.add(crearTarjetaIndicador("Stock Total Acumulado", lblStockTotalAcumulado));
-        panelIndicadores.add(crearTarjetaIndicador("Valorización Total Inventario", lblValorizacionTotal));
-
-        panelNorte.add(panelIndicadores, BorderLayout.CENTER);
-
-        JPanel panelAcciones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
-        botonActualizar = new JButton("Actualizar Reporte");
-        panelAcciones.add(botonActualizar);
-        panelNorte.add(panelAcciones, BorderLayout.SOUTH);
-
-        add(panelNorte, BorderLayout.NORTH);
-
-        // Panel central: las 2 tablas de reportes
-        JPanel panelTablas = new JPanel(new GridLayout(2, 1, 10, 10));
-
-        // 1. Tabla de alerta de productos activos con stock bajo (stock_actual <= 5)
-        JPanel panelStockBajo = new JPanel(new BorderLayout(5, 5));
-        panelStockBajo.setBorder(BorderFactory.createTitledBorder("Alerta de Stock Bajo (Productos Activos con Stock <= 5)"));
-        String[] colStockBajo = {"Código", "Nombre", "Categoría", "Tipo", "Precio ($)", "Stock Actual"};
-        modeloStockBajo = new DefaultTableModel(colStockBajo, 0) {
+        initComponents();
+        modeloEstadisticaTipo = new DefaultTableModel(new Object[]{"Tipo de Producto", "Cant. Productos", "Stock Total", "Precio Mínimo", "Precio Máximo"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        tablaStockBajo = new JTable(modeloStockBajo);
-        tablaStockBajo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        panelStockBajo.add(new JScrollPane(tablaStockBajo), BorderLayout.CENTER);
+        tablaEstadisticas.setModel(modeloEstadisticaTipo);
 
-        // 2. Tabla estadística agrupada por Tipo de Producto
-        JPanel panelPorTipo = new JPanel(new BorderLayout(5, 5));
-        panelPorTipo.setBorder(BorderFactory.createTitledBorder("Estadísticas de Inventario Agrupadas por Tipo de Producto"));
-        String[] colEstadistica = {
-            "Tipo de Producto",
-            "Cant. Productos Activos",
-            "Stock Acumulado",
-            "Precio Mínimo ($)",
-            "Precio Máximo ($)"
-        };
-        modeloEstadisticaTipo = new DefaultTableModel(colEstadistica, 0) {
+        modeloStockBajo = new DefaultTableModel(new Object[]{"Código", "Producto", "Categoría", "Stock Actual"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        tablaEstadisticaTipo = new JTable(modeloEstadisticaTipo);
-        tablaEstadisticaTipo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        panelPorTipo.add(new JScrollPane(tablaEstadisticaTipo), BorderLayout.CENTER);
-
-        panelTablas.add(panelStockBajo);
-        panelTablas.add(panelPorTipo);
-
-        add(panelTablas, BorderLayout.CENTER);
+        tablaStockBajo.setModel(modeloStockBajo);
     }
 
-    private JPanel crearTarjetaIndicador(String titulo, JLabel labelValor) {
-        JPanel tarjeta = new JPanel(new BorderLayout(5, 5));
-        tarjeta.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(titulo),
-                BorderFactory.createEmptyBorder(8, 10, 8, 10)
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabelP = new javax.swing.JLabel();
+        lblTotalProductosActivos = new javax.swing.JLabel();
+        jLabelS = new javax.swing.JLabel();
+        lblStockTotalAcumulado = new javax.swing.JLabel();
+        jLabelV = new javax.swing.JLabel();
+        lblValorizacionTotal = new javax.swing.JLabel();
+        botonActualizar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaEstadisticas = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaStockBajo = new javax.swing.JTable();
+
+        jLabelP.setText("Productos Activos:");
+
+        lblTotalProductosActivos.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        lblTotalProductosActivos.setText("0");
+
+        jLabelS.setText("Stock Total:");
+
+        lblStockTotalAcumulado.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        lblStockTotalAcumulado.setText("0");
+
+        jLabelV.setText("Valorización:");
+
+        lblValorizacionTotal.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        lblValorizacionTotal.setText("$ 0.00");
+
+        botonActualizar.setText("Actualizar Reportes");
+
+        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel1.setText("Estadísticas por Tipo de Producto (COUNT, SUM, MIN, MAX):");
+
+        tablaEstadisticas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] {"Tipo de Producto", "Cant. Productos", "Stock Total", "Precio Mínimo", "Precio Máximo"}
         ));
-        labelValor.setFont(new Font("SansSerif", Font.BOLD, 20));
-        tarjeta.add(labelValor, BorderLayout.CENTER);
-        return tarjeta;
-    }
+        jScrollPane1.setViewportView(tablaEstadisticas);
+
+        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel2.setText("Productos Activos con Stock Bajo (<= 5 unidades):");
+
+        tablaStockBajo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] {"Código", "Producto", "Categoría", "Stock Actual"}
+        ));
+        jScrollPane2.setViewportView(tablaStockBajo);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelP)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTotalProductosActivos)
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabelS)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblStockTotalAcumulado)
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabelV)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblValorizacionTotal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+                        .addComponent(botonActualizar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(15, 15, 15))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelP)
+                    .addComponent(lblTotalProductosActivos)
+                    .addComponent(jLabelS)
+                    .addComponent(lblStockTotalAcumulado)
+                    .addComponent(jLabelV)
+                    .addComponent(lblValorizacionTotal)
+                    .addComponent(botonActualizar))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                .addGap(15, 15, 15))
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton botonActualizar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelP;
+    private javax.swing.JLabel jLabelS;
+    private javax.swing.JLabel jLabelV;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    public javax.swing.JLabel lblStockTotalAcumulado;
+    public javax.swing.JLabel lblTotalProductosActivos;
+    public javax.swing.JLabel lblValorizacionTotal;
+    public javax.swing.JTable tablaEstadisticas;
+    public javax.swing.JTable tablaStockBajo;
+    // End of variables declaration//GEN-END:variables
 }

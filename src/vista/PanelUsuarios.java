@@ -1,143 +1,228 @@
 package vista;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import modelo.Rol;
 
-public class PanelUsuarios extends JPanel {
-    public JTextField cajaIdUsuario;
-    public JTextField cajaIdPersona;
-    public JTextField cajaNombre;
-    public JTextField cajaApellido;
-    public JTextField cajaDni;
-    public JTextField cajaTelefono;
-    public JTextField cajaEmail;
-    public JTextField cajaNombreUsuario;
-    public JPasswordField cajaClave;
-    public JComboBox<Rol> comboRol;
+public class PanelUsuarios extends javax.swing.JPanel {
 
-    public JButton botonInsertar;
-    public JButton botonModificar;
-    public JButton botonCambiarEstado;
-    public JButton botonLimpiar;
-
-    public JTable tablaUsuarios;
     public DefaultTableModel modeloTabla;
 
     public PanelUsuarios() {
-        setLayout(new BorderLayout(10, 10));
-        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        cajaIdUsuario = new JTextField();
-        cajaIdPersona = new JTextField();
-        cajaIdUsuario.setVisible(false);
-        cajaIdPersona.setVisible(false);
-
-        JPanel panelFormulario = new JPanel(new GridBagLayout());
-        panelFormulario.setBorder(BorderFactory.createTitledBorder("Datos de Persona y Cuenta de Usuario"));
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(4, 6, 4, 6);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-
-        // Fila 0: Nombre y Apellido
-        gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0.1;
-        panelFormulario.add(new JLabel("Nombre:*"), gbc);
-        gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 0.4;
-        cajaNombre = new JTextField();
-        panelFormulario.add(cajaNombre, gbc);
-
-        gbc.gridx = 2; gbc.gridy = 0; gbc.weightx = 0.1;
-        panelFormulario.add(new JLabel("Apellido:*"), gbc);
-        gbc.gridx = 3; gbc.gridy = 0; gbc.weightx = 0.4;
-        cajaApellido = new JTextField();
-        panelFormulario.add(cajaApellido, gbc);
-
-        // Fila 1: DNI y Teléfono
-        gbc.gridx = 0; gbc.gridy = 1; gbc.weightx = 0.1;
-        panelFormulario.add(new JLabel("DNI:*"), gbc);
-        gbc.gridx = 1; gbc.gridy = 1; gbc.weightx = 0.4;
-        cajaDni = new JTextField();
-        panelFormulario.add(cajaDni, gbc);
-
-        gbc.gridx = 2; gbc.gridy = 1; gbc.weightx = 0.1;
-        panelFormulario.add(new JLabel("Teléfono:"), gbc);
-        gbc.gridx = 3; gbc.gridy = 1; gbc.weightx = 0.4;
-        cajaTelefono = new JTextField();
-        panelFormulario.add(cajaTelefono, gbc);
-
-        // Fila 2: Email y Usuario
-        gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 0.1;
-        panelFormulario.add(new JLabel("Email:"), gbc);
-        gbc.gridx = 1; gbc.gridy = 2; gbc.weightx = 0.4;
-        cajaEmail = new JTextField();
-        panelFormulario.add(cajaEmail, gbc);
-
-        gbc.gridx = 2; gbc.gridy = 2; gbc.weightx = 0.1;
-        panelFormulario.add(new JLabel("Usuario:*"), gbc);
-        gbc.gridx = 3; gbc.gridy = 2; gbc.weightx = 0.4;
-        cajaNombreUsuario = new JTextField();
-        panelFormulario.add(cajaNombreUsuario, gbc);
-
-        // Fila 3: Contraseña y Rol
-        gbc.gridx = 0; gbc.gridy = 3; gbc.weightx = 0.1;
-        panelFormulario.add(new JLabel("Clave:*"), gbc);
-        gbc.gridx = 1; gbc.gridy = 3; gbc.weightx = 0.4;
-        cajaClave = new JPasswordField();
-        cajaClave.setToolTipText("Obligatoria al crear. Dejar vacía al modificar si no desea cambiarla.");
-        panelFormulario.add(cajaClave, gbc);
-
-        gbc.gridx = 2; gbc.gridy = 3; gbc.weightx = 0.1;
-        panelFormulario.add(new JLabel("Rol:*"), gbc);
-        gbc.gridx = 3; gbc.gridy = 3; gbc.weightx = 0.4;
-        comboRol = new JComboBox<>();
-        panelFormulario.add(comboRol, gbc);
-
-        // Fila 4: Botones
-        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
-        botonInsertar = new JButton("Guardar Nuevo");
-        botonModificar = new JButton("Modificar");
-        botonCambiarEstado = new JButton("Activar / Desactivar");
-        botonLimpiar = new JButton("Limpiar");
-
-        panelBotones.add(botonInsertar);
-        panelBotones.add(botonModificar);
-        panelBotones.add(botonCambiarEstado);
-        panelBotones.add(botonLimpiar);
-
-        gbc.gridx = 0; gbc.gridy = 4; gbc.gridwidth = 4;
-        panelFormulario.add(panelBotones, gbc);
-
-        add(panelFormulario, BorderLayout.NORTH);
-
-        // Tabla inferior
-        String[] columnas = {"ID", "ID_PER", "Usuario", "Nombre", "Apellido", "DNI", "Teléfono", "Email", "Rol", "Estado"};
-        modeloTabla = new DefaultTableModel(columnas, 0) {
+        initComponents();
+        modeloTabla = new DefaultTableModel(new Object[]{"IDUsr", "IDPer", "Usuario", "Nombre", "Apellido", "DNI", "Teléfono", "Email", "Rol", "Estado"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        tablaUsuarios = new JTable(modeloTabla);
-        tablaUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        // Ocultar columna ID_PER visualmente
-        tablaUsuarios.getColumnModel().getColumn(1).setMinWidth(0);
-        tablaUsuarios.getColumnModel().getColumn(1).setMaxWidth(0);
-        tablaUsuarios.getColumnModel().getColumn(1).setWidth(0);
-
-        add(new JScrollPane(tablaUsuarios), BorderLayout.CENTER);
+        tablaUsuarios.setModel(modeloTabla);
     }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        panelDatos = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        cajaIdUsuario = new javax.swing.JTextField();
+        cajaIdPersona = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        cajaNombre = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        cajaApellido = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        cajaDni = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        cajaTelefono = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        cajaEmail = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        cajaNombreUsuario = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        cajaClave = new javax.swing.JPasswordField();
+        jLabel9 = new javax.swing.JLabel();
+        comboRol = new javax.swing.JComboBox<>();
+        botonInsertar = new javax.swing.JButton();
+        botonModificar = new javax.swing.JButton();
+        botonCambiarEstado = new javax.swing.JButton();
+        botonLimpiar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaUsuarios = new javax.swing.JTable();
+
+        panelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos de Persona y Usuario"));
+
+        jLabel1.setText("IDs (Usr / Per):");
+
+        cajaIdUsuario.setEditable(false);
+
+        cajaIdPersona.setEditable(false);
+
+        jLabel2.setText("Nombre:");
+
+        jLabel3.setText("Apellido:");
+
+        jLabel4.setText("DNI:");
+
+        jLabel5.setText("Teléfono:");
+
+        jLabel6.setText("Email:");
+
+        jLabel7.setText("Nombre Usuario:");
+
+        jLabel8.setText("Contraseña:");
+
+        jLabel9.setText("Rol:");
+
+        botonInsertar.setText("Guardar Usuario");
+
+        botonModificar.setText("Modificar");
+
+        botonCambiarEstado.setText("Activar / Desactivar");
+
+        botonLimpiar.setText("Limpiar");
+
+        javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
+        panelDatos.setLayout(panelDatosLayout);
+        panelDatosLayout.setHorizontalGroup(
+            panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDatosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cajaNombre)
+                    .addComponent(cajaApellido)
+                    .addComponent(cajaDni)
+                    .addComponent(cajaTelefono)
+                    .addComponent(cajaEmail)
+                    .addComponent(cajaNombreUsuario)
+                    .addComponent(cajaClave)
+                    .addComponent(comboRol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botonInsertar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botonModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botonCambiarEstado, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                    .addComponent(botonLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelDatosLayout.createSequentialGroup()
+                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(panelDatosLayout.createSequentialGroup()
+                                .addComponent(cajaIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cajaIdPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        panelDatosLayout.setVerticalGroup(
+            panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDatosLayout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cajaIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cajaIdPersona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cajaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cajaApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cajaDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cajaTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cajaEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cajaNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cajaClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botonInsertar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonModificar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonCambiarEstado)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonLimpiar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] {"IDUsr", "IDPer", "Usuario", "Nombre", "Apellido", "DNI", "Teléfono", "Email", "Rol", "Estado"}
+        ));
+        jScrollPane1.setViewportView(tablaUsuarios);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton botonCambiarEstado;
+    public javax.swing.JButton botonInsertar;
+    public javax.swing.JButton botonLimpiar;
+    public javax.swing.JButton botonModificar;
+    public javax.swing.JTextField cajaApellido;
+    public javax.swing.JPasswordField cajaClave;
+    public javax.swing.JTextField cajaDni;
+    public javax.swing.JTextField cajaEmail;
+    public javax.swing.JTextField cajaIdPersona;
+    public javax.swing.JTextField cajaIdUsuario;
+    public javax.swing.JTextField cajaNombre;
+    public javax.swing.JTextField cajaNombreUsuario;
+    public javax.swing.JTextField cajaTelefono;
+    public javax.swing.JComboBox<Rol> comboRol;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel panelDatos;
+    public javax.swing.JTable tablaUsuarios;
+    // End of variables declaration//GEN-END:variables
 }
